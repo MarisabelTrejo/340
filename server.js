@@ -18,7 +18,7 @@ const static = require("./routes/static")
  *************************/
 app.set("view engine", "ejs")
 app.set(expressLayouts)
-app.set("partials", "./partials")
+app.set("partials")
 app.set("layout", "./layouts/layout")
 /* ***********************
  * Routes
