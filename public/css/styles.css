@@ -246,7 +246,7 @@ nav {
 }
 
 .invalid:invalid {
-  background-color: whitesmoke(255, 38, 38);
+  background-color: whitesmoke;
 }
 
 .valid:valid {
