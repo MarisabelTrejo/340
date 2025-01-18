@@ -27,6 +27,7 @@ header div a {
 nav {
   background-color: black;
   padding: 5px 0px;
+  color:white;
 }
 nav ul {
   display: flex;
@@ -37,7 +38,7 @@ nav ul {
 }
 
 nav li {
-  color: white;
+  background-color: white;
   margin: 0px 10px;
 }
 
