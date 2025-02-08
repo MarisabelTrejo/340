@@ -79,6 +79,36 @@ Util.buildVehicleGrid = async function (data) {
   }
   return grid;
 }
+
+Util.getSingleView = async function (data) {
+  let singleView = 
+  `<div>
+    <table>
+        <tr>
+            <!-- Car Image on the Left -->
+            <td>
+                <img src="car-image.jpg" alt="2019 Nissan Sentra" width="300">
+            </td>
+
+            <!-- Car Details on the Right -->
+            <td>
+            
+                <h2> ${data.inv_year} </h2>
+                <p><strong>Price: $16,999</strong></p>
+                <p>Mileage: 74,750</p>
+                <p>MPG: 29/37 (City/Highway)</p>
+                <p>Fuel Type: Gasoline</p>
+                <p>Drivetrain: Front Wheel Drive</p>
+                <p>Transmission: Xtronic CVT</p>
+                <p>VIN: 3N1AB7AP3KY362032</p>
+                <p>Contact Us: 801-396-7886</p>
+            </td>
+        </tr>
+    </table>
+  </div>
+  `
+  return singleView;
+}
  
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
