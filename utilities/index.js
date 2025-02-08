@@ -93,9 +93,9 @@ Util.getSingleView = async function (data) {
             <!-- Car Details on the Right -->
             <td>
             
-                <h2> ${data.inv_year} </h2>
-                <p><strong>Price: $16,999</strong></p>
-                <p>Mileage: 74,750</p>
+                <h2> ${data[0].inv_year} </h2>
+                <p><strong>Price: $${data[0].inv_price}</strong></p>
+                <p>Mileage: ${data[0].inv_miles}</p>
                 <p>MPG: 29/37 (City/Highway)</p>
                 <p>Fuel Type: Gasoline</p>
                 <p>Drivetrain: Front Wheel Drive</p>

@@ -29,7 +29,7 @@ invCont.buildByInvId = async function (req, res, next) {
   let nav = await utilities.getNav()
   const data = await invModel.buildByInvId(inv_id);
   console.log(data);
-  const vehicleName = data.inv_year+ " " + data.inv_make + " " + data.inv_model;
+  const vehicleName = data[0].inv_year+ " " + data[0].inv_make + " " + data[0].inv_model;
   const singleView = await utilities.getSingleView(data)
  
   res.render("./inventory/detail", {
