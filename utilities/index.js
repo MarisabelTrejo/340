@@ -90,7 +90,9 @@ Util.buildVehicleGrid = async function (data) {
         <h1 class="sec-title">${data[0].inv_make} ${
       data[0].inv_model
     } Details</h1>
-        <p class="price">Price: $${data[0].inv_price}</p>
+        <p class="price">Price: $${Number(
+          data[0].inv_price
+        ).toLocaleString()}</p>
         <p class="details">${data[0].inv_description}</p>
         <p class="color">Color: ${data[0].inv_color}</p>
         <p class="miles">Miles: ${Number(
@@ -114,7 +116,7 @@ Util.getSingleView = async function (data) {
     <!-- Car Details -->
     <div class="car-details">
       <h2>Year: ${data[0].inv_year}</h2>
-      <p>Price: $${data[0].inv_price}</p>
+      <p>Price: $${Number(data[0].inv_price).toLocaleString()}</p>
       <p>Mileage: ${Number(data[0].inv_miles).toLocaleString()}</p>
       <p>Color: ${data[0].inv_color}</p>
     </div>
