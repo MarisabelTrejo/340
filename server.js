@@ -91,21 +91,20 @@ app.use(async (err, req, res, next) => {
     nav,
   });
 });
-
+// Health Check Route
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
+const host = process.env.HOST;
 
 /* ***********************
  * Log statement to confirm server operation
  *************************/
 app.listen(port, () => {
-  console.log(`✅ app listening on port ${port}`);
-});
-
-/* Health Check Route */
-app.get("/", (req, res) => {
-  res.send("Server is live! 🔥");
+  console.log(`app listening on ${host}:${port}`);
 });
