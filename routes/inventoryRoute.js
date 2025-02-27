@@ -19,6 +19,11 @@ router.get(
   utilities.handleErrors(manageController.buildManagement)
 );
 
+router.get(
+  "/invDisplay",
+  utilities.handleErrors(manageController.buildManagement)
+);
+
 // New Classification
 router.get(
   "/newClassifacation",

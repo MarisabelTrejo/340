@@ -9,7 +9,6 @@ require("dotenv").config();
  * *************************************** */
 async function buildLogin(req, res, next) {
   let nav = await utilities.getNav();
-  req.flash("notice", "This is a flash message.");
   res.render("account/login", {
     title: "Login",
     nav,
@@ -29,21 +28,24 @@ async function buildRegister(req, res, next) {
 }
 
 /* ***************************
- *  Build edit inventory view
+ *  Build edit account view
  * ************************** */
 async function editAccountInfo(req, res, next) {
-  let nav = await utilities.getNav();
-  const account_id = parseInt(req.params.account_id);
-  const accountData = await accountModel.getAccountById(account_id);
-  res.render("account/editAccount", {
-    title: "Edit Account",
-    nav,
-    errors: null,
-    account_id: accountData.account_id,
-    account_firstname: accountData.account_firstname,
-    account_lastname: accountData.account_lastname,
-    account_email: accountData.account_email,
-  });
+  try {
+    const account_id = parseInt(req.params.account_id);
+    const accountData = await accountModel.getAccountById(account_id);
+    if (!accountData) {
+      throw new Error("Account not found");
+    }
+    // Render the edit account page
+    res.render("account/editAccount", {
+      title: "Edit Account",
+      nav: await utilities.getNav(),
+      account: accountData,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* ****************************************
@@ -72,6 +74,7 @@ async function registerAccount(req, res) {
       nav,
       errors: null,
     });
+    return;
   }
   const regResult = await accountModel.registerAccount(
     account_firstname,
@@ -100,11 +103,11 @@ async function registerAccount(req, res) {
 /* ****************************************
  *  Deliver logged in view
  * *************************************** */
-async function buildAccountMangementView(req, res, next) {
+async function buildAccountManagementView(req, res, next) {
   let nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
-  res.render("./account/accountmanagement", {
-    title: "Manage Inventory",
+  res.render("account/accountmanagement", {
+    title: "Account Management",
     nav,
     errors: null,
     classificationSelect,
@@ -134,7 +137,6 @@ async function accountLogin(req, res) {
       nav,
       errors: null,
       account_email,
-      console,
     });
     return;
   }
@@ -146,25 +148,35 @@ async function accountLogin(req, res) {
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: 3600 }
       );
-      if (process.env.NODE_ENV === "development") {
-        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
-      } else {
-        res.cookie("jwt", accessToken, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 3600 * 1000,
-        });
-        const authorized = true;
-      }
+      res.cookie("jwt", accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600 * 1000,
+      });
       return res.redirect("/account");
+    } else {
+      req.flash("notice", "Please check your credentials and try again.");
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
     }
   } catch (error) {
-    return new Error("Access Forbidden");
+    console.error("Login error:", error);
+    req.flash("notice", "An error occurred during login. Please try again.");
+    res.status(500).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+    });
   }
 }
 
 /* ***************************
- *  Update Inventory Data
+ *  Update Account Data
  * ************************** */
 async function updateAccount(req, res, next) {
   let nav = await utilities.getNav();
@@ -178,13 +190,12 @@ async function updateAccount(req, res, next) {
   );
 
   if (updateResult) {
-    req.flash("notice", `This was successfully updated.`);
+    req.flash("notice", `Your account was successfully updated.`);
     res.redirect("/account");
   } else {
-    // const classificationSelect = await utilities.buildClassificationList(classification_id)
-    req.flash("notice", "Sorry, the insert failed.");
+    req.flash("notice", "Sorry, the update failed.");
     res.status(501).render("account/editAccount", {
-      title: "Edit",
+      title: "Edit Account",
       nav,
       errors: null,
       account_id,
@@ -195,14 +206,12 @@ async function updateAccount(req, res, next) {
   }
 }
 
-// send a boolean Authenticated value
-
 module.exports = {
   buildLogin,
   buildRegister,
   registerAccount,
   accountLogin,
-  buildAccountMangementView,
+  buildAccountManagementView,
   accountLogout,
   editAccountInfo,
   updateAccount,
