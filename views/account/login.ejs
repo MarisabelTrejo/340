@@ -1,0 +1,22 @@
+<!-- Pass on title -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+ 
+<!-- Flash message -->
+<%- messages() %>
+ 
+<form id="loginForm" action="/account/login" method="post">
+  <fieldset>
+    <label>Email Address</label>
+    <input class="username" name="account_email" type="email"  required placeholder="someone@gmail.com">
+    <label>Password</label>
+    <input class="password" name="account_password" type="password"  required placeholder="Enter Password">
+    <p>Passwords must be minimum of 12 characters and include 1 capital letter, 1 number and 1 special character.</p>
+    <button class="show-password">Show Password</button>
+    <p class="no-account">No Account?<a href="../account/register">Sign Up</a></p>
+    <button class="submit" type="submit" name="login">Login</button>
+  </fieldset>
+  </form>

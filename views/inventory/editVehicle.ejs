@@ -1,0 +1,39 @@
+<!-- Pass on title -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+ 
+<!-- messages -->
+<%# messages() %>
+ 
+<form action="/inv/Update" method="post">
+    <h2>ALL FIELDS ARE REQUIRED</h2>
+    <fieldset class="vehicle-fieldset">
+        <label for="classificationList">Classification</label>
+        <%- classificationSelect %>
+        <label>Make</label>
+        <input type="text" name="inv_make" id="inv_make" required minlength="3" placeholder="Min of 3 characters" <% if(locals.inv_make) { %> value="<%= locals.inv_make %>"<% } %>>>
+        <input class="lastname valid invalid" name="inv_model" type="text"  required placeholder="Enter Model"  <% if(locals.inv_model) { %> value="<%= locals.inv_model %>"<% } %>>>
+        <label>Description</label>
+        <input class="username valid invalid" name="inv_description" type="text"  required placeholder="Enter Descritpion"  <% if(locals.inv_description) { %> value="<%= locals.inv_description %>"<% } %>>>
+        <label>Image path</label>
+        <input class="lastname valid invalid" name="inv_image" type="text"  required placeholder="Ente Image Path"  <% if(locals.inv_image) { %> value="<%= locals.inv_image %>"<% } %>>>
+        <label>Thumbnail path</label>
+        <input class="lastname valid invalid" name="inv_thumbnail" type="text"  required placeholder="Ente Thumbnail Path"  <% if(locals.inv_thumbnail) { %> value="<%= locals.inv_thumbnail %>"<% } %>>>
+        <label>Price</label>
+        <input class="lastname valid invalid" name="inv_price" type="number"  required placeholder="Enter price"  <% if(locals.inv_price) { %> value="<%= locals.inv_price %>"<% } %>>>
+        <label>year</label>
+        <input class="lastname valid invalid" name="inv_year" type="text"  required placeholder="Enter year"  <% if(locals.inv_year) { %> value="<%= locals.inv_year %>"<% } %>>>
+        <label>miles</label>
+        <input class="lastname valid invalid" name="inv_miles" type="number"  required placeholder="Enter Miles"  <% if(locals.inv_miles) { %> value="<%= locals.inv_miles %>"<% } %>>>
+        <label>Color</label>
+        <input class="lastname valid invalid" name="inv_color" type="text"  required placeholder="Entter Color"  <% if(locals.inv_color) { %> value="<%= locals.inv_color %>"<% } %>>>
+        <button type="submit">Update Vehicle</button>
+        <input type="hidden" name="inv_id"
+        <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
+    </fieldset>
+</form>
+ 

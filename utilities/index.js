@@ -26,6 +26,18 @@ Util.getNav = async function (req, res, next) {
   list += "</ul>";
   return list;
 };
+/* ****************************************
+ *  Deliver login view
+ * *************************************** */
+async function buildLogin(req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("account/login", {
+    title: "Login",
+    nav,
+  });
+}
+
+module.exports = { buildLogin };
 
 /* **************************************
  * Build the classification view HTML

@@ -1,0 +1,35 @@
+<!-- Pass on title -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+ 
+    <%# messages() %>
+ 
+    <form class="vehicle-form" action="/inv/newVehicle" method="post">
+        <h2>ALL FIELDS ARE REQUIRED</h2>
+        <fieldset class="vehicle-fieldset">
+            <label for="classificationList">Classification</label>
+            <%- classificationSelect %>
+            <label>Make</label>
+            <input class="r-firstname valid invalid" name="make" type="text"  required placeholder="Enter Make">
+            <label>Model</label>
+            <input class="lastname valid invalid" name="model" type="text"  required placeholder="Enter Model">
+            <label>Description</label>
+            <input class="username valid invalid" name="description" type="text"  required placeholder="Enter Descritpion">
+            <label>Image path</label>
+            <input class="lastname valid invalid" name="image_path" type="text"  required placeholder="Ente Image Path">
+            <label>Thumbnail path</label>
+            <input class="lastname valid invalid" name="thumbnail_path" type="text"  required placeholder="Ente Thumbnail Path">
+            <label>Price</label>
+            <input class="lastname valid invalid" name="price" type="number"  required placeholder="Enter price">
+            <label>year</label>
+            <input class="lastname valid invalid" name="year" type="text"  required placeholder="Enter year">
+            <label>miles</label>
+            <input class="lastname valid invalid" name="miles" type="number"  required placeholder="Enter Miles">
+            <label>Color</label>
+            <input class="lastname valid invalid" name="color" type="text"  required placeholder="Entter Color">
+            <button class="r-submit" type="submit">Add New Car</button>
+        </fieldset>
+    </form>

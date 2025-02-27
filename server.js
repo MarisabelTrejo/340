@@ -6,28 +6,25 @@
  * Require Statements
  *************************/
 const express = require("express");
-const env = require("dotenv").config();
-const app = express();
-const static = require("./routes/static");
-const inventoryRoute = require("./routes/inventoryRoute");
 const expressLayouts = require("express-ejs-layouts");
+const env = require("dotenv").config();
+const static = require("./routes/static");
 const baseController = require("./controllers/baseController");
-const utilities = require("./utilities");
+const inventoryRoute = require("./routes/inventoryRoute");
+const accountRoute = require("./routes/accountRoute");
+const utilities = require("./utilities/");
 const session = require("express-session");
-const pool = require("./database/");
+const pool = require("./database");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
-/* ***********************
- * View Engine and Templates
- *************************/
-app.set("view engine", "ejs");
-app.use(expressLayouts);
-app.set("layout", "./layouts/layout"); // not at views root
+const app = express();
 
 /* ***********************
  * Middleware
+ * Between the request and response
  * ************************/
+// Unit 4, Sessions & Messages Activity
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
@@ -40,29 +37,36 @@ app.use(
     name: "sessionId",
   })
 );
-
+// Unit 4, Sessions & Messages Activity
 // Express Messages Middleware
 app.use(require("connect-flash")());
 app.use(function (req, res, next) {
   res.locals.messages = require("express-messages")(req, res);
   next();
 });
-
+// Unit 4, Process Registration Activity
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
+// Unit 5, Login activity
 app.use(cookieParser());
+// Unit 5, Login Process activity
+app.use(utilities.checkJWTToken);
+
+/* ***********************
+ * View Engine and Templates
+ *************************/
+
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/layout"); // not at views root
 
 /* ***********************
  * Routes
  *************************/
 app.use(static);
-
-// Index route
 app.get("/", utilities.handleErrors(baseController.buildHome));
-
-// Inventory routes
 app.use("/inv", inventoryRoute);
+app.use("/account", accountRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -79,10 +83,7 @@ app.use(async (err, req, res, next) => {
   if (err.status == 404) {
     message = err.message;
   } else {
-    message =
-      "Oh no! There was a crash. Maybe try a different route?<br><br><strong>" +
-      err.message +
-      "</strong>";
+    message = "Oh no! There was a crash. Maybe try a different route?";
   }
   res.render("errors/error", {
     title: err.status || "Server Error",

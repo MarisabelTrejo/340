@@ -7,19 +7,15 @@ const invModel = require("../models/inventory-model");
  *  Deliver management view
  * *************************************** */
 async function buildManagement(req, res, next) {
-  try {
-    let nav = await utilities.getNav();
-    const classificationSelect = await utilities.buildClassificationList();
-    res.render("inventory/management", {
-      title: "Vehicle Management",
-      nav,
-      Errors: null,
-      classificationSelect,
-      message: req.flash("notice"), // ✅ Make sure flash messages are passed
-    });
-  } catch (error) {
-    next(error); // ✅ Pass errors to error handler
-  }
+  let nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList();
+  req.flash("notice", "This is a flash message.");
+  res.render("inventory/management", {
+    title: "Vehicle Management",
+    nav,
+    Errors: null,
+    classificationSelect,
+  });
 }
 
 async function addNewClassifacation(req, res, next) {

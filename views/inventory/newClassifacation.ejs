@@ -1,0 +1,18 @@
+<!-- Pass on title -->
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+<%# messages() %>
+
+    <form class="Classification-form" action="../inv/newClassifacation" method="post">
+      <h2>FIELD is REQUIRED</h2>
+      <fieldset class="Classification-fieldset">
+          <h3>Classification Name</h3>
+          <label>Name must be Alphabetic Characters Only</label>
+          <input class="r-firstname valid invalid" name="new_classification" type="text"  required placeholder="Enter Classification Name">
+          <button class="r-submit" type="submit" name="login">Add Classification</button>
+      </fieldset>
+  </form>
