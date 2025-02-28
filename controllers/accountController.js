@@ -106,7 +106,7 @@ async function registerAccount(req, res) {
 async function buildAccountManagementView(req, res, next) {
   let nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
-  res.render("account/accountmanagement", {
+  res.render("account/accountManagement", {
     title: "Account Management",
     nav,
     errors: null,
