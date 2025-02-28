@@ -26,26 +26,22 @@ async function buildRegister(req, res, next) {
     errors: null,
   });
 }
-
 /* ***************************
- *  Build edit account view
+ *  Build edit inventory view
  * ************************** */
 async function editAccountInfo(req, res, next) {
-  try {
-    const account_id = parseInt(req.params.account_id);
-    const accountData = await accountModel.getAccountById(account_id);
-    if (!accountData) {
-      throw new Error("Account not found");
-    }
-    // Render the edit account page
-    res.render("account/editAccount", {
-      title: "Edit Account",
-      nav: await utilities.getNav(),
-      account: accountData,
-    });
-  } catch (error) {
-    next(error);
-  }
+  let nav = await utilities.getNav();
+  const account_id = parseInt(req.params.account_id);
+  const accountData = await accountModel.getAccountById(account_id);
+  res.render("account/editAccount", {
+    title: "Edit Account",
+    nav,
+    errors: null,
+    account_id: accountData.account_id,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+  });
 }
 
 /* ****************************************
