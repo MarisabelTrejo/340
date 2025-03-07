@@ -60,6 +60,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.buildInvMangementView = async (req, res, next) => {
   let nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
+
   res.render("./inventory/invDisplay", {
     title: "Manage Inventory",
     nav,

@@ -15,6 +15,14 @@
 <a href="/inv/newVehicle">Add New Vehicle</a>
 </div>    
 
+<h2> Manage Inventory</h2>
+<p> Choose a Classification to see those inventory items</p>
+<%- classificationSelect %>
+<table id="inventoryDisplay"></table>
+
+<noscript>Java Script must be anabled ot use this page</noscript>
+
+<script src="../../js/inventory.js"></script>
 
 <h3>Edit Account Info</h3>
 <a href="/account/editAccount/<%= accountData.account_id %>" title="Click to update your account information">Edit Account Information</a>

@@ -24,7 +24,13 @@ router.post(
   utilities.handleErrors(actController.registerAccount)
 );
 
-router.post("/login", utilities.handleErrors(actController.accountLogin));
+// Process the login data with validation ✅
+router.post(
+  "/login",
+  //regValidate.loginRules(), // Add login validation rules
+  //regValidate.checkLoginData, // Check login data before processing
+  utilities.handleErrors(actController.accountLogin) // Process login
+);
 
 router.get("/logout", utilities.handleErrors(actController.accountLogout));
 
@@ -38,6 +44,11 @@ router.post("/update", utilities.handleErrors(actController.updateAccount));
 router.post(
   "/updatePassword",
   utilities.handleErrors(actController.updatePassword)
+);
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(actController.buildAccountManagementView)
 );
 
 module.exports = router;
