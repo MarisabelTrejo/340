@@ -7,6 +7,7 @@ const regValidate = require("../utilities/account-validation");
 // Root account route
 router.get(
   "/",
+  utilities.checkLogin,
   utilities.handleErrors(actController.buildAccountManagementView)
 );
 
@@ -27,8 +28,8 @@ router.post(
 // Process the login data with validation ✅
 router.post(
   "/login",
-  //regValidate.loginRules(), // Add login validation rules
-  //regValidate.checkLoginData, // Check login data before processing
+  regValidate.loginRules(), // Add login validation rules
+  regValidate.checkLoginData, // Check login data before processing
   utilities.handleErrors(actController.accountLogin) // Process login
 );
 

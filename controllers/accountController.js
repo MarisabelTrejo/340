@@ -96,63 +96,89 @@ async function registerAccount(req, res) {
   }
 }
 
-/* ****************************************
- *  Deliver logged in view
- * *************************************** */
 async function buildAccountManagementView(req, res, next) {
   let nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
+
+  // ✅ Ensure accountData is retrieved from session
+  const accountData = req.session.accountData || null;
+
+  if (!accountData) {
+    req.flash("notice", "Please log in first.");
+    return res.redirect("/account/login");
+  }
+
   res.render("account/accountManagement", {
     title: "Account Management",
     nav,
     errors: null,
     classificationSelect,
+    accountData, // ✅ Pass accountData explicitly
   });
 }
-
 /* ****************************************
  *  Log out
  * *************************************** */
 async function accountLogout(req, res) {
   res.clearCookie("jwt");
-  res.locals.loggedin = "";
+  req.session = null; // Destroy session
+  res.locals.loggedin = false; // Ensure logged-in state is reset
   return res.redirect("/");
 }
 
-/* ****************************************
- *  Process login request
- * ************************************ */
 async function accountLogin(req, res) {
   let nav = await utilities.getNav();
   const { account_email, account_password } = req.body;
-  const accountData = await accountModel.getAccountByEmail(account_email);
-  if (!accountData) {
-    req.flash("notice", "Please check your credentials and try again.");
-    res.status(400).render("account/login", {
-      title: "Login",
-      nav,
-      errors: null,
-      account_email,
-    });
-    return;
-  }
+
   try {
-    if (await bcrypt.compare(account_password, accountData.account_password)) {
+    // Fetch user data from database
+    const accountData = await accountModel.getAccountByEmail(account_email);
+
+    // Debugging logs
+    console.log("User found:", accountData);
+    console.log("Entered password:", account_password);
+    console.log(
+      "Stored password:",
+      accountData ? accountData.account_password : "No password found"
+    );
+
+    // Ensure user exists and has a password
+    if (!accountData || !accountData.account_password) {
+      req.flash("notice", "Invalid login credentials.");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
+    }
+
+    // Compare passwords
+    const passwordMatch = await bcrypt.compare(
+      account_password,
+      accountData.account_password
+    );
+
+    if (passwordMatch) {
       delete accountData.account_password;
       const accessToken = jwt.sign(
         accountData,
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: 3600 }
       );
+      // Store user data in res.locals or session
+      req.session.accountData = accountData; // ✅ Store in session
+
       res.cookie("jwt", accessToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: false, // Set to true only in production
         maxAge: 3600 * 1000,
       });
-      return res.redirect("/account");
+
+      return res.redirect("/account/");
     } else {
       req.flash("notice", "Please check your credentials and try again.");
-      res.status(400).render("account/login", {
+      return res.status(400).render("account/login", {
         title: "Login",
         nav,
         errors: null,
