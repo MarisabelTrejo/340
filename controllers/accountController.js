@@ -107,6 +107,13 @@ async function buildAccountManagementView(req, res, next) {
     req.flash("notice", "Please log in first.");
     return res.redirect("/account/login");
   }
+  // Set locals.loggedin based on the presence of the JWT token
+  const token = req.cookies.jwt;
+  if (token) {
+    res.locals.loggedin = true;
+  } else {
+    res.locals.loggedin = false;
+  }
 
   res.render("account/accountManagement", {
     title: "Account Management",
@@ -168,6 +175,8 @@ async function accountLogin(req, res) {
       );
       // Store user data in res.locals or session
       req.session.accountData = accountData; // ✅ Store in session
+      // Set the loggedin variable to true
+      res.locals.loggedin = true;
 
       res.cookie("jwt", accessToken, {
         httpOnly: true,

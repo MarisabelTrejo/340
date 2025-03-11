@@ -1,12 +1,18 @@
-
 <!-- Pass on title -->
 <% if (title) { %>
   <h1><%= title %></h1>
-  <% } else {
-    res.redirect('/')
-  } %>
+<% } else { %>
+  <%= res.redirect('/') %>
+<% } %>
 
-  <%# messages() %>
+<!-- Show logout button if user is logged in -->
+<% if (locals.loggedin) { %> 
+  <form action="/account/logout" method="POST">
+    <button type="submit">Log Out</button>
+  </form>
+<% } %>
+
+<%# messages() %>
 
 <h2>Welcome <%- locals.accountData.account_firstname %></h2>
 
@@ -17,9 +23,11 @@
 <h3>Manage Inventory</h3>
 <a href="/inv/invDisplay">Manage Inventory</a>
 <p> Choose a Classification to see those inventory items</p>
+
 <%- classificationSelect %>
+
 <table id="inventoryDisplay"></table>
 
-<noscript>Java Script must be anabled ot use this page</noscript>
+<noscript>JavaScript must be enabled to use this page</noscript>
 
 <script src="../../js/inventory.js"></script>

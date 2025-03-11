@@ -34,6 +34,7 @@ router.post(
 );
 
 router.get("/logout", utilities.handleErrors(actController.accountLogout));
+router.post("/logout", utilities.handleErrors(actController.accountLogout));
 
 router.get(
   "/editAccount/:account_id",
