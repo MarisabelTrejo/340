@@ -7,7 +7,7 @@
 
 <!-- Show logout button if user is logged in -->
 <% if (locals.loggedin) { %> 
-  <form action="/account/logout" method="POST">
+  <form class='button' action="/account/logout" method="POST">
     <button type="submit">Log Out</button>
   </form>
 <% } %>

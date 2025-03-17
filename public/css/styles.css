@@ -175,6 +175,21 @@ form {
   background-color: rgb(0, 128, 255);
 }
 
+.button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgb(0, 128, 255);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.button button {
+  background-color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
 fieldset {
   display: flex;
   flex-direction: column;
