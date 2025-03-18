@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+main {
+  position: relative;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -67,11 +71,20 @@ nav li {
 }
 
 .button {
-  margin: 15px 0px 0px 0px;
-  padding: 5px 20px;
-  background-color: skyblue;
-  border: none;
+  
+ 
+  
+
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+ 
+}
+.button button { 
   color: black;
+  background-color: white; /* Optional */
+ 
+  border: none;
+  cursor: pointer;
 }
 
 .line-1, .line-2 {
@@ -168,11 +181,10 @@ footer{
 /* Login view */
 
 form {
-  display: block;
-  height: 75%;
-  width: 50%;
-  margin: 0px auto;
+  position: absolute;
   background-color: rgb(0, 128, 255);
+  padding: 10px 20px;
+
 }
 
 
