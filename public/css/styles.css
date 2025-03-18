@@ -5,10 +5,6 @@
   box-sizing: border-box;
 }
 
-main {
-  position: relative;
-}
-
 header {
   display: flex;
   justify-content: space-between;
@@ -70,21 +66,17 @@ nav li {
   margin: 0px;
 }
 
-.button {
-  
- 
-  
 
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
- 
+.button  { 
+  grid-area: logout;
+  justify-self: end; /* Aligns the form to the right */
+  align-self: start; /* Aligns the form to the top */
+  margin: 10px; 
 }
-.button button { 
-  color: black;
-  background-color: white; /* Optional */
- 
-  border: none;
-  cursor: pointer;
+
+.button form {
+  margin: 0px auto;
+  width:auto;
 }
 
 .line-1, .line-2 {
@@ -181,11 +173,12 @@ footer{
 /* Login view */
 
 form {
-  
+  display: block;
+  height: 75%;
+  margin: 0px auto;
   background-color: rgb(0, 128, 255);
-  padding: 10px 20px;
-
 }
+
 
 
 fieldset {
