@@ -10,10 +10,16 @@
   <fieldset>
     <h2>ALL FIELDS ARE REQUIRED</h2>
 
-    <label>First Name</label>
-    <input class="r-firstname" name="account_firstname" type="text" required
-    placeholder="Enter firstname" <%= locals.account_firstname ?
-    `value="${locals.account_firstname}"` : '' %> />
+    <label for="account_firstname">First Name</label>
+    <input
+      id="account_firstname"
+      class="r-firstname"
+      name="account_firstname"
+      type="text"
+      required
+      placeholder="Enter firstname"
+      value="<%= locals.account_firstname ? locals.account_firstname : '' %>"
+    />
 
     <label>Last Name</label>
     <input class="lastname" name="account_lastname" type="text" required
