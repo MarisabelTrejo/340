@@ -1,0 +1,54 @@
+<!-- Pass on title -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { %> <% res.redirect('/') %> <% } %>
+
+<!-- Flash message -->
+<%- messages() %>
+
+<form action="/account/update" method="post">
+  <fieldset>
+    <h2>ALL FIELDS ARE REQUIRED</h2>
+
+    <label>First Name</label>
+    <input class="r-firstname" name="account_firstname" type="text" required
+    placeholder="Enter firstname" <%= locals.account_firstname ?
+    `value="${locals.account_firstname}"` : '' %> />
+
+    <label>Last Name</label>
+    <input class="lastname" name="account_lastname" type="text" required
+    placeholder="Enter lastname" <%= locals.account_lastname ?
+    `value="${locals.account_lastname}"` : '' %> />
+
+    <label>Email Address</label>
+    <input class="username" name="account_email" type="email" required
+    placeholder="someone@gmail.com" <%= locals.account_email ?
+    `value="${locals.account_email}"` : '' %> />
+
+    <button class="r-submit" type="submit" name="login">Update Account</button>
+  </fieldset>
+</form>
+
+<h2>Update Password</h2>
+<form action="/account/updatePassword" method="post">
+  <fieldset>
+    <h2>ALL FIELDS ARE REQUIRED</h2>
+    <!-- Hidden field to pass account_id -->
+    <input type="hidden" name="account_id" value="<%= locals.account_id %>" />
+
+    <label>Update Password</label>
+    <input
+      class="password"
+      name="account_password"
+      type="password"
+      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      required
+      placeholder="Enter Password"
+    />
+    <p>
+      Passwords must be at least 12 characters long and include 1 uppercase
+      letter, 1 number, and 1 special character.
+    </p>
+    <button class="r-submit" type="submit">Update Password</button>
+  </fieldset>
+</form>

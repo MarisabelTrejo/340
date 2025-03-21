@@ -237,6 +237,37 @@ async function updateAccount(req, res, next) {
   }
 }
 
+async function updatePassword(req, res, next) {
+  let nav = await utilities.getNav();
+  const { account_id, account_password } = req.body;
+
+  // Validate that required fields exist
+  if (!account_id || !account_password) {
+    req.flash("notice", "Missing required fields.");
+    return res.redirect("/account/editAccount/" + account_id);
+  }
+
+  // Debugging logs
+  console.log("Updating password for account_id:", account_id);
+
+  const updateResult = await accountModel.updatePassword(
+    account_id,
+    account_password
+  );
+
+  if (updateResult) {
+    req.flash("notice", "Password updated successfully.");
+    res.redirect("/account");
+  } else {
+    req.flash("notice", "Sorry, the update failed.");
+    res.status(501).render("account/editAccount", {
+      title: "Edit Password",
+      nav,
+      errors: null,
+      account_id,
+    });
+  }
+}
 module.exports = {
   buildLogin,
   buildRegister,
@@ -246,4 +277,5 @@ module.exports = {
   accountLogout,
   editAccountInfo,
   updateAccount,
+  updatePassword,
 };

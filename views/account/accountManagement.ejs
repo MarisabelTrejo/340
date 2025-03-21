@@ -1,33 +1,20 @@
 <!-- Pass on title -->
 <% if (title) { %>
   <h1><%= title %></h1>
-<% } else { %>
-  <%= res.redirect('/') %>
-<% } %>
+  <% } else {
+    res.redirect('/')
+  } %>
 
-<!-- Show logout button if user is logged in -->
-<% if (locals.loggedin) { %> 
-  <form class='button' action="/account/logout" method="POST">
-    <button type="submit">Log Out</button>
-  </form>
-<% } %>
+<!-- Flash message -->
+<%- messages() %>
+<h2>Welcome <%= accountData.account_firstname  %></h2>
+<p>You're logged in.</p>
 
-<%# messages() %>
+<div class="links">  
+<a href="/inv/newClassifacation">Add New Classifacation</a>
+<a href="/inv/newVehicle">Add New Vehicle</a>
+</div>    
 
-<h2>Welcome <%- locals.accountData.account_firstname %></h2>
 
-<a href="/inv/editAccount">Edit Account Information</a>
-
-<h2>Edit </h2>
-
-<h3>Manage Inventory</h3>
-<a href="/inv/invDisplay">Manage Inventory</a>
-<p> Choose a Classification to see those inventory items</p>
-
-<%- classificationSelect %>
-
-<table id="inventoryDisplay"></table>
-
-<noscript>JavaScript must be enabled to use this page</noscript>
-
-<script src="../../js/inventory.js"></script>
+<h3>Edit Account Info</h3>
+<a href="/account/editAccount/<%= accountData.account_id %>" title="Click to update your account information">Edit Account Information</a>

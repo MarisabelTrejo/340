@@ -76,9 +76,27 @@ async function updateAccount(
   }
 }
 
+async function updatePassword(account_id, account_password) {
+  try {
+    const sql = `
+      UPDATE public.account
+      SET account_password = $1
+      WHERE account_id = $2
+      RETURNING account_id;
+    `;
+    const result = await pool.query(sql, [account_password, account_id]);
+
+    console.log("Update result:", result);
+    return result.rowCount > 0;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    return false;
+  }
+}
 module.exports = {
   registerAccount,
   getAccountByEmail,
   getAccountById,
   updateAccount,
+  updatePassword,
 };
