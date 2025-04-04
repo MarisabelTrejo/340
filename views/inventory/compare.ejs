@@ -1,38 +1,35 @@
 <!-- Pass on title -->
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-      res.redirect('/')
-    } %>
+<h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
 
 <!-- Flash message -->
 <%- messages() %>
 
 <div class="compare-container">
-    <div class="vehicle-selector">
-        <h2>Select Vehicles to Compare</h2>
-        <div class="select-vehicles">
-            <div class="vehicle-select">
-                <label for="vehicle1">Vehicle 1</label>
-                <select id="vehicle1" name="vehicle1">
-                    <option value="">Select a vehicle</option>
-                    <%- vehicleSelect %>
-                </select>
-            </div>
-            <div class="vehicle-select">
-                <label for="vehicle2">Vehicle 2</label>
-                <select id="vehicle2" name="vehicle2">
-                    <option value="">Select a vehicle</option>
-                    <%- vehicleSelect %>
-                </select>
-            </div>
-        </div>
+  <div class="vehicle-selector">
+    <h2>Select Vehicles to Compare</h2>
+    <div class="select-vehicles">
+      <div class="vehicle-select">
+        <label for="vehicle1">Vehicle 1</label>
+        <select id="vehicle1" name="vehicle1">
+          <option value="">Select a vehicle</option>
+          <%- vehicleSelect %>
+        </select>
+      </div>
+      <div class="vehicle-select">
+        <label for="vehicle2">Vehicle 2</label>
+        <select id="vehicle2" name="vehicle2">
+          <option value="">Select a vehicle</option>
+          <%- vehicleSelect %>
+        </select>
+      </div>
     </div>
+  </div>
 
-    <div id="comparison-results" class="comparison-results">
-        <!-- Results will be populated by JavaScript -->
-    </div>
+  <div id="comparison-results" class="comparison-results">
+    <!-- Results will be populated by JavaScript -->
+  </div>
 </div>
 
-<noscript>JavaScript must be enabled to use this page.</noscript>
-<script src="/js/compare.js"></script> 
+<script src="/js/compare.js"></script>
