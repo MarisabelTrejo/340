@@ -50,12 +50,15 @@ importers:
       pg:
         specifier: ^8.8.0
         version: 8.13.1
+      pnpm:
+        specifier: ^10.7.1
+        version: 10.7.1
       session:
         specifier: ^0.1.0
         version: 0.1.0
     devDependencies:
       nodemon:
-        specifier: ^3.1.0
+        specifier: ^3.1.9
         version: 3.1.9
 
 packages:
@@ -527,6 +530,11 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  pnpm@10.7.1:
+    resolution: {integrity: sha512-LZLIa3ko3IKE9TSU+0IB+YPaZfD7Tw1Auq+lz2KPox2uPllo8SRm8X336XMQ4w80OmSLrqG5s1BoXa+v/99YCA==}
+    engines: {node: '>=18.12'}
+    hasBin: true
 
   postgres-array@2.0.0:
     resolution: {integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==}
@@ -1169,6 +1177,8 @@ snapshots:
       split2: 4.2.0
 
   picomatch@2.3.1: {}
+
+  pnpm@10.7.1: {}
 
   postgres-array@2.0.0: {}
 
