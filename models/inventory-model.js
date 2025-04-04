@@ -118,6 +118,24 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+/* ***************************
+ *  Get all vehicles for comparison
+ * ************************** */
+async function getAllVehicles() {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory AS i
+      JOIN public.classification AS c
+      ON i.classification_id = c.classification_id
+      ORDER BY i.inv_year DESC, i.inv_make, i.inv_model`
+    );
+    return data.rows;
+  } catch (error) {
+    console.error("getAllVehicles error:", error);
+    return [];
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
@@ -126,4 +144,5 @@ module.exports = {
   updateInventory,
   deleteInventoryItem,
   addReview,
+  getAllVehicles
 };

@@ -84,4 +84,42 @@ invCont.addReview = async (req, res) => {
   );
 };
 
+/* ****************************************
+ *  Build vehicle comparison view
+ * *************************************** */
+invCont.buildCompareView = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const vehicleSelect = await utilities.buildVehicleSelect();
+  
+  res.render("./inventory/compare", {
+    title: "Compare Vehicles",
+    nav,
+    vehicleSelect,
+  });
+};
+
+/* ****************************************
+ *  Get vehicle comparison data
+ * *************************************** */
+invCont.getComparisonData = async function (req, res, next) {
+  const vehicle1Id = parseInt(req.params.vehicle1Id);
+  const vehicle2Id = parseInt(req.params.vehicle2Id);
+
+  try {
+    const vehicle1 = await invModel.buildByInvId(vehicle1Id);
+    const vehicle2 = await invModel.buildByInvId(vehicle2Id);
+
+    if (!vehicle1[0] || !vehicle2[0]) {
+      return res.status(404).json({ error: "One or both vehicles not found" });
+    }
+
+    res.json({
+      vehicle1: vehicle1[0],
+      vehicle2: vehicle2[0]
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = invCont;

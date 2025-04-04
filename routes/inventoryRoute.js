@@ -69,4 +69,8 @@ router.post("/delete", utilities.handleErrors(manageController.deleteItem));
 
 router.post("/addReview", utilities.handleErrors(invController.addReview));
 
+// Vehicle comparison routes
+router.get("/compare", utilities.handleErrors(invController.buildCompareView));
+router.get("/compare/:vehicle1Id/:vehicle2Id", utilities.handleErrors(invController.getComparisonData));
+
 module.exports = router;

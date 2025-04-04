@@ -11,6 +11,7 @@ Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
   let list = "<ul>";
   list += '<li><a href="/" title="Home page">Home</a></li>';
+  list += '<li><a href="/inv/compare" title="Compare vehicles">Compare Vehicles</a></li>';
   data.rows.forEach((row) => {
     list += "<li>";
     list +=
@@ -212,6 +213,22 @@ Util.checkLogin = (req, res, next) => {
     req.flash("notice", "Please log in.");
     return res.redirect("/account/login");
   }
+};
+
+/* ****************************************
+ *  Build vehicle select dropdown
+ * *************************************** */
+Util.buildVehicleSelect = async function () {
+  const data = await invModel.getAllVehicles();
+  let select = '';
+  
+  if (data.length > 0) {
+    data.forEach(vehicle => {
+      select += `<option value="${vehicle.inv_id}">${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</option>`;
+    });
+  }
+  
+  return select;
 };
 
 module.exports = Util;
